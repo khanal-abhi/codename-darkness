@@ -16,8 +16,8 @@ class TaskAPI(remote.service):
                       path='task',
                       http_method='POST')
     def insert_task(self, request):
-        new_task = task.Task(name=request.name, owner=request.owner).put()
-        return Task(name=new_task.name, owner=new_task.owner)
+        task.Task(name=request.name, owner=request.owner).put()
+        return request
 
 
 Application = endpoints.api_server([TaskAPI], restricted=False)
