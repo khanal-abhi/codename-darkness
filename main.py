@@ -27,24 +27,25 @@ class TaskAPI(remote.Service):
     decorated with the endpoints wrapper will be the endpoint methods."""
 
     @endpoints.method(Task, Task,
-                      name='task',
+                      name='task.insert',
                       path='task',
                       http_method='POST')
     def insert_task(self, request):
-        TaskModel(name=request.name, owner=request.owner).put()
+        # TaskModel(name=request.name, owner=request.owner).put()
         return request
 
     @endpoints.method(message_types.VoidMessage, Tasks,
-                      name='tasks',
+                      name='task.list_tasks',
                       path='tasks',
                       http_method='GET')
     def list_tasks(self, unused_request):
-        tasks = []
-        queried_tasks = TaskModel.query()
-        for single_task in queried_tasks:
-            tasks.append(single_task)
+        pass
+        # tasks = []
+        # queried_tasks = TaskModel.query()
+        # for single_task in queried_tasks:
+        #     tasks.append(single_task)
+        #
+        # return Tasks(items=tasks)
 
-        return Tasks(items=tasks)
 
-
-Application = endpoints.api_server([TaskAPI], restricted=False)
+Application = endpoints.api_server([TaskAPI])
