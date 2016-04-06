@@ -31,7 +31,7 @@ class TaskAPI(remote.Service):
                       path='task',
                       http_method='POST')
     def insert_task(self, request):
-        # TaskModel(name=request.name, owner=request.owner).put()
+        TaskModel(name=request.name, owner=request.owner).put()
         return request
 
     @endpoints.method(message_types.VoidMessage, Tasks,
@@ -39,13 +39,12 @@ class TaskAPI(remote.Service):
                       path='tasks',
                       http_method='GET')
     def list_tasks(self, unused_request):
-        pass
-        # tasks = []
-        # queried_tasks = TaskModel.query()
-        # for single_task in queried_tasks:
-        #     tasks.append(single_task)
-        #
-        # return Tasks(items=tasks)
+        tasks = []
+        queried_tasks = TaskModel.query()
+        for single_task in queried_tasks:
+            tasks.append(Task(name=single_task.name, owner=single_task.owner))
+
+        return Tasks(items=tasks)
 
 
 Application = endpoints.api_server([TaskAPI])
